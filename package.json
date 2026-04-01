@@ -1,5 +1,5 @@
 {
-  "name": "eaglerneoinjector",
+  "name": "eaglerfabricinjector",
   "version": "1.0.0",
   "description": "Advanced modding API injector for unminified, unobfuscated, unsigned eaglercraft builds.",
   "main": "node.js",
@@ -12,7 +12,7 @@
   "bin": {
     "efi": "./npx_wrapper.js"
   },
-  "author": "EaglerNeo Team",
+  "author": "EaglerFabric Team",
   "license": "MIT",
   "devDependencies": {
     "@xmldom/xmldom": "^0.9.8"
