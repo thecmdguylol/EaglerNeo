@@ -8,7 +8,7 @@ async function main() {
     
     if (args.includes("/help") || args.length === 0) {
         console.log("***************************");
-        console.log("* EaglerFabricInjector CLI *");
+        console.log("* EaglerNeoInjector CLI *");
         console.log("***************************");
         console.log("");
         console.log("> npx efi /help #shows this help text");
