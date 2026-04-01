@@ -37,7 +37,7 @@ var modapi_preinit = `globalThis.ModAPI ||= {};
       `;
 var freezeCallstack = `if(ModAPI.hooks.freezeCallstack){return false};`;
 const EFIConfig = {
-    ModAPIVersion: "v2.7.97", //also change in package.json
+    ModAPIVersion: "BETA v1.0.0", //also change in package.json
     doEaglerforge: true,
     verbose: false,
     doServerExtras: false,
