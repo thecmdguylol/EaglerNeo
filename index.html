@@ -1,188 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="EaglerFabric Injector is a tool designed for modifying or injecting code into Eaglercraft clients, supporting 1.8 and 1.12.">
-    <link rel="canonical" href="https://github.com/thecmdguylol/EaglerFabric/">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:title" content="EaglerFabric Injector - Modding API for Eaglercraft">
-    <meta property="og:url" content="https://github.com/thecmdguylol/EaglerFabric">
-    <meta property="og:site_name" content="EaglerFabroc Injector - Modding API for Eaglercraft">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta property="og:image" content="https://github.com/thecmdguylol/EaglerFabric/res/EaglerFabricInjector.png">
-    <meta property="og:image:width" content="1024">
-    <meta property="og:image:height" content="1024">
-    <meta property="og:image:type" content="image/png">
+<meta name="description" content="EaglerFabric Injector is a modding tool for injecting and modifying Eaglercraft clients with .efpack support." />
+<meta property="og:title" content="EaglerFabric BETA v1.0.0" />
+<meta property="og:site_name" content="EaglerFabric Injector" />
 
-    <meta name="author" content="EaglerFabric Team">
+<title>EaglerFabric BETA v1.0.0</title>
 
-    <title>Loading...</title>
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        background-color: #2b2b2b;
-        color: #ffffff;
-        overflow-x: hidden;
-        overflow-y: scroll;
-      }
-      .container {
-        text-align: center;
-        margin-top: 50px;
-      }
+<style>
+:root {
+    --bg: #0d0f14;
+    --panel: #141824;
+    --panel2: #1b2130;
+    --accent: #7c5cff;
+    --text: #e6e6e6;
+    --muted: #9aa4b2;
+    --good: #4ade80;
+}
 
-      .github-button-container {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-      }
+* {
+    box-sizing: border-box;
+    font-family: ui-sans-serif, system-ui, Arial;
+}
 
-      .github-button-container a.btn {
-        color: #ffffff;
-        border-color: #ffffff;
-      }
+body {
+    margin: 0;
+    background: radial-gradient(circle at top, #1a1f2e, var(--bg));
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+}
 
-      .github-button-container a.btn:hover {
-        background-color: #ffffff;
-        color: #000000;
-      }
-      #info {
-        text-align: left;
-        min-width: 50vw;
-      }
-      details {
-        text-align: left;
-        padding: 6px;
-        border-radius: 1rem;
-        background-color: rgba(0, 0, 0, 0.5);
-        margin-bottom: 1rem;
-      }
-      summary {
-        background-color: rgba(255, 255, 255, 0.1);
-        padding: 4px;
-        border-radius: 0.6rem;
-        padding-left: 8px;
-      }
-      h6 {
-        font-weight: normal;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>EaglerFabric Injector</h1>
-      <div class="github-button-container">
-        <a
-          href="https://github.com/eaglerforge/EaglerForgeInjector"
-          class="btn btn-default"
-          target="_blank"
-        >
-          <i class="fab fa-github"></i> GitHub
-        </a>
-      </div>
-      <h6>
-        Adds ModAPI with more functionality (adds hooking into functions,
-        exposes all classes, etc) to unminified unobfuscated EaglercraftX and Eaglercraft 1.12.2
-        offline downloads (web support coming soon).
-      </h6>
-      <br />
-      <div class="custom-file mb-3">
-        <input
-          class="custom-file-input"
-          type="file"
-          id="htmlFile"
-          accept=".html,.js"
-        />
-        <label class="custom-file-label" for="htmlFile"
-          >Choose .html file...</label
-        >
-        <br />
-        <span>
-        <label>Minify:&nbsp;</label><input type="checkbox" oninput="EFIConfig.doMinify = this.checked">
-            &nbsp;&nbsp;&nbsp;
-        <label>Minify Extras:&nbsp;</label><input type="checkbox" oninput="EFIConfig.doMinifyPlus = this.checked">
-            &nbsp;&nbsp;&nbsp;
-        <label>EaglerFabric Functionality:&nbsp;</label><input checked type="checkbox" oninput="EFIConfig.doEaglerforge = this.checked">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code id="status">Awaiting input...</code></span>
-        <br /><br />
-        <button class="btn btn-primary" id="giveme">Make EaglerFabric Client!</button>
-      </div>
+.sidebar {
+    width: 360px;
+    background: linear-gradient(180deg, var(--panel), var(--panel2));
+    padding: 20px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    overflow-y: auto;
+}
 
-      <br /><br /><br />
-      <span>Info:</span>
-      <div id="#info">
-        <details>
-          <summary>
-            Where can I download an unobfuscated unsigned Eaglercraft build?
-          </summary>
-            <p>
-              <strong>1.8:</strong>
-              <a href="https://github.com/Eaglercraft-Archive/unminified-eaglercraft-builds/releases/latest">
-                https://github.com/Eaglercraft-Archive/unminified-eaglercraft-builds/releases/latest
-              </a>
-            </p>
-            <p>
-              <strong>1.12:</strong>
-              <a href="https://github.com/Eaglercraft-Archive/unminified-eaglercraft-builds-1.12/releases/latest">
-                https://github.com/Eaglercraft-Archive/unminified-eaglercraft-builds-1.12/releases/latest
-              </a>
-            </p>
-        </details>
-        <details>
-          <summary>
-            How do I compile my own unobfuscated unsigned Eaglercraft build?
-          </summary>
-          <a href="docs/compiling_client">tutorial here</a>
-        </details>
-        <details>
-          <summary>How does this tool work?</summary>
-          The injector works by analysing your uploaded file for patterns that
-          appear in TeaVM's compiled JavaScript code. Then, it will replace all
-          functions with proxies to the original code, which it moves into
-          <code>ModAPI.hooks.methods</code>. It does similar things with static
-          properties and constructors, and then hooks into
-          <code>$rt_metadata</code> to access auxilary information.
-        </details>
-        <details>
-          <summary>Where documentation???</summary>
-          <a href="https://eaglerforge.github.io/EaglerForgeInjector/docs"
-            >https://github.com/thecmdguylol/EaglerFabric/docs</a
-          >
-        </details>
-      </div>
+.main {
+    flex: 1;
+    padding: 40px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.version {
+    color: var(--accent);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text);
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.toggle {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    font-size: 13px;
+}
+
+code {
+    color: var(--good);
+}
+
+details {
+    background: rgba(255,255,255,0.03);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+summary {
+    cursor: pointer;
+    color: var(--text);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.status {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h1>EaglerFabric</h1>
+    <div class="version">BETA v1.0.0</div>
+
+    <div class="card">
+        <label>Load Client File</label>
+        <input type="file" id="htmlFile" accept=".html,.js,.zip,.efpack" />
+        <div class="status" id="status">Awaiting input...</div>
+        <button id="giveme">Inject Client</button>
     </div>
 
-    <!-- Libraries -->
-    <script src="libs/babel.min.js"></script>
-    <script src="libs/filesaver.min.js"></script>
+    <div class="card">
+        <label>Options</label>
 
-    <script>
-      document.querySelector("#htmlFile").addEventListener("input", (e) => {
-        if (e.target.files[0]) {
-          document.querySelector(".custom-file-label").innerText =
-            e.target.files[0].name;
-        }
-      });
-    </script>
+        <div class="toggle">
+            <span>Minify</span>
+            <input type="checkbox" onchange="EFIConfig.doMinify=this.checked">
+        </div>
 
-    <!-- Code assets -->
-    <script src="core/patches.js"></script>
-    <script src="core/minify.js"></script>
-    <script src="core/postinit.js"></script>
-    <script src="core/modloader.js"></script>
-    <script src="core/modgui.js"></script>
-    <script src="core/efserver.js"></script>
-    <script src="core/core.js"></script>
+        <div class="toggle">
+            <span>Minify Extras</span>
+            <input type="checkbox" onchange="EFIConfig.doMinifyPlus=this.checked">
+        </div>
 
-    <script src="backgroundLogger.js"></script>
-    <script src="browser.js"></script>
-  </body>
+        <div class="toggle">
+            <span>EaglerFabric Features</span>
+            <input type="checkbox" checked onchange="EFIConfig.doEaglerforge=this.checked">
+        </div>
+    </div>
+
+    <div class="card">
+        <label>GitHub</label>
+        <a href="https://github.com/thecmdguylol/EaglerFabric" target="_blank">
+            https://github.com/thecmdguylol/EaglerFabric
+        </a>
+    </div>
+</div>
+
+<div class="main">
+    <h2>Modding Injector Console</h2>
+    <p style="color: var(--muted)">
+        Upload an Eaglercraft client and inject ModAPI + .efpack support.
+    </p>
+
+    <details>
+        <summary>Downloads</summary>
+        <p><a href="https://github.com/Eaglercraft-Archive/unminified-eaglercraft-builds/releases/latest">1.8 Builds</a></p>
+        <p><a href="https://github.com/Eaglercraft-Archive/unminified-eaglercraft-builds-1.12/releases/latest">1.12 Builds</a></p>
+    </details>
+
+    <details>
+        <summary>How it works</summary>
+        Injects ModAPI hooks into TeaVM output, enabling runtime modification,
+        event injection, and file-based mod loading (.efpack / zip support).
+    </details>
+
+    <details>
+        <summary>Documentation</summary>
+        <a href="https://github.com/thecmdguylol/EaglerFabric">View Docs</a>
+    </details>
+</div>
+
+<script>
+document.querySelector("#htmlFile").addEventListener("input", (e) => {
+    if (e.target.files[0]) {
+        document.querySelector("#status").innerText = "Loaded: " + e.target.files[0].name;
+    }
+});
+</script>
+
+<script src="libs/babel.min.js"></script>
+<script src="libs/filesaver.min.js"></script>
+
+<script src="core/patches.js"></script>
+<script src="core/minify.js"></script>
+<script src="core/postinit.js"></script>
+<script src="core/modloader.js"></script>
+<script src="core/modgui.js"></script>
+<script src="core/efserver.js"></script>
+<script src="core/core.js"></script>
+
+<script src="backgroundLogger.js"></script>
+<script src="browser.js"></script>
+
+</body>
 </html>
