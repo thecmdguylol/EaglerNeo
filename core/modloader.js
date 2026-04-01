@@ -109,7 +109,7 @@ const modapi_modloader = "(" + (() => {
         const entries = Object.keys(zip.files);
 
         for (let path of entries) {
-            if (!path.endsWith(".js")) continue;
+            if (!path.endsWith(".js") && !path.endsWith(".zip") && !path.endsWith(".efpack")) continue;
 
             const content = await zip.files[path].async("string");
 
